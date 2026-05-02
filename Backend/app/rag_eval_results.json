@@ -1,0 +1,41 @@
+{
+  "metrics": [
+    {
+      "metric": "Index Coverage",
+      "score": 100.0,
+      "display": "100.0%",
+      "detail": "2/2 documents chunked & indexed"
+    },
+    {
+      "metric": "Embedding Hit Rate",
+      "score": 100.0,
+      "display": "100.0%",
+      "detail": "8/8 queries had strong match (\u22650.55) | avg top: 0.627"
+    },
+    {
+      "metric": "Chunk Retrieval Quality",
+      "score": 0.611,
+      "display": "0.611 (Good)",
+      "detail": "Avg:0.611 Min:0.561 Max:0.692 | 40 chunks scored"
+    },
+    {
+      "metric": "Context Utilization",
+      "score": 100.0,
+      "display": "100.0%",
+      "detail": "40 useful out of 40 retrieved (threshold \u22650.4)"
+    },
+    {
+      "metric": "Query Success Rate",
+      "score": 100.0,
+      "display": "100.0%",
+      "detail": "54/54 succeeded | Last 10: 10/10 (100%)"
+    }
+  ],
+  "tiers": {
+    "S": 4,
+    "A": 1,
+    "B": 0,
+    "C": 0
+  },
+  "generated_at": "2026-04-12T22:13:21.337216"
+}

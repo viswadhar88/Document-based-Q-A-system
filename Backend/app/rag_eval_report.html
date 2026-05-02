@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AskYourDoc — RAG Eval Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0d14;
+    --surface:  #111827;
+    --card:     #161d2e;
+    --border:   #1e293b;
+    --text:     #e2e8f0;
+    --muted:    #64748b;
+    --s:        #4ade80;
+    --a:        #38bdf8;
+    --b:        #facc15;
+    --c:        #f87171;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #818cf8, #38bdf8, #4ade80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.4rem;
+  }
+  header p { color: var(--muted); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
+
+  /* Verdict */
+  .verdict {
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.8rem;
+    border: 1px solid;
+  }
+  .verdict-s { color: var(--s); border-color: var(--s); background: rgba(74,222,128,0.08); }
+  .verdict-a { color: var(--a); border-color: var(--a); background: rgba(56,189,248,0.08); }
+  .verdict-b { color: var(--b); border-color: var(--b); background: rgba(250,204,21,0.08); }
+  .verdict-c { color: var(--c); border-color: var(--c); background: rgba(248,113,113,0.08); }
+
+  /* Tier summary */
+  .tier-summary {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .ts {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; font-weight: 600;
+    padding: 0.3rem 0.8rem; border-radius: 6px;
+    border: 1px solid;
+  }
+  .ts.s { color: var(--s); border-color: var(--s); background: rgba(74,222,128,0.1); }
+  .ts.a { color: var(--a); border-color: var(--a); background: rgba(56,189,248,0.1); }
+  .ts.b { color: var(--b); border-color: var(--b); background: rgba(250,204,21,0.1); }
+  .ts.c { color: var(--c); border-color: var(--c); background: rgba(248,113,113,0.1); }
+
+  /* Metric cards */
+  .cards { display: grid; gap: 1rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg) 70%);
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  .card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .metric-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem; font-weight: 700; color: var(--text);
+  }
+  .tier-badge {
+    font-size: 0.72rem; font-weight: 700;
+    padding: 0.2rem 0.65rem; border-radius: 20px; border: 1px solid;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;
+  }
+
+  /* Progress bar */
+  .bar-wrap {
+    display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.55rem;
+  }
+  .bar-track {
+    flex: 1; height: 10px; background: var(--border);
+    border-radius: 999px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 999px;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 0 10px currentColor;
+  }
+  .bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+  }
+  .detail {
+    color: var(--muted); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+  }
+
+  /* Charts section */
+  .charts-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--muted); letter-spacing: 0.08em;
+    text-transform: uppercase; margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  @media(max-width: 640px) { .charts-grid { grid-template-columns: 1fr; } }
+  .chart-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+  }
+  .chart-box h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center; color: var(--muted);
+    font-size: 0.72rem; margin-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding-top: 1rem; border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>AskYourDoc — RAG Quality Evaluation</h1>
+    <p>Generated: 2026-04-12 22:13:23</p>
+  </header>
+
+  <div class="verdict verdict-s">🏆 RAG pipeline performing at a high level</div>
+
+  <div class="tier-summary"><span class='ts s'>🏆 S = 4</span><span class='ts a'>✅ A = 1</span><span class='ts b'>⚠️  B = 0</span><span class='ts c'>❌ C = 0</span></div>
+
+  <div class="cards">
+    
+        <div class="card" style="--accent:#4ade80;--bg:rgba(74,222,128,0.12);">
+          <div class="card-header">
+            <span class="metric-name">Index Coverage</span>
+            <span class="tier-badge" style="color:#4ade80;border-color:#4ade80;background:rgba(74,222,128,0.12);">
+              🏆 S Tier
+            </span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-track">
+              <div class="bar-fill" style="width:0%;background:#4ade80;"
+                   data-target="100.0"></div>
+            </div>
+            <span class="bar-label" style="color:#4ade80;">100.0%</span>
+          </div>
+          <p class="detail">→ 2/2 documents chunked & indexed</p>
+        </div>
+        
+        <div class="card" style="--accent:#4ade80;--bg:rgba(74,222,128,0.12);">
+          <div class="card-header">
+            <span class="metric-name">Embedding Hit Rate</span>
+            <span class="tier-badge" style="color:#4ade80;border-color:#4ade80;background:rgba(74,222,128,0.12);">
+              🏆 S Tier
+            </span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-track">
+              <div class="bar-fill" style="width:0%;background:#4ade80;"
+                   data-target="100.0"></div>
+            </div>
+            <span class="bar-label" style="color:#4ade80;">100.0%</span>
+          </div>
+          <p class="detail">→ 8/8 queries had strong match (≥0.55) | avg top: 0.627</p>
+        </div>
+        
+        <div class="card" style="--accent:#38bdf8;--bg:rgba(56,189,248,0.12);">
+          <div class="card-header">
+            <span class="metric-name">Chunk Retrieval Quality</span>
+            <span class="tier-badge" style="color:#38bdf8;border-color:#38bdf8;background:rgba(56,189,248,0.12);">
+              ✅ A Tier
+            </span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-track">
+              <div class="bar-fill" style="width:0%;background:#38bdf8;"
+                   data-target="61.1"></div>
+            </div>
+            <span class="bar-label" style="color:#38bdf8;">0.611 (Good)</span>
+          </div>
+          <p class="detail">→ Avg:0.611 Min:0.561 Max:0.692 | 40 chunks scored</p>
+        </div>
+        
+        <div class="card" style="--accent:#4ade80;--bg:rgba(74,222,128,0.12);">
+          <div class="card-header">
+            <span class="metric-name">Context Utilization</span>
+            <span class="tier-badge" style="color:#4ade80;border-color:#4ade80;background:rgba(74,222,128,0.12);">
+              🏆 S Tier
+            </span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-track">
+              <div class="bar-fill" style="width:0%;background:#4ade80;"
+                   data-target="100.0"></div>
+            </div>
+            <span class="bar-label" style="color:#4ade80;">100.0%</span>
+          </div>
+          <p class="detail">→ 40 useful out of 40 retrieved (threshold ≥0.4)</p>
+        </div>
+        
+        <div class="card" style="--accent:#4ade80;--bg:rgba(74,222,128,0.12);">
+          <div class="card-header">
+            <span class="metric-name">Query Success Rate</span>
+            <span class="tier-badge" style="color:#4ade80;border-color:#4ade80;background:rgba(74,222,128,0.12);">
+              🏆 S Tier
+            </span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-track">
+              <div class="bar-fill" style="width:0%;background:#4ade80;"
+                   data-target="100.0"></div>
+            </div>
+            <span class="bar-label" style="color:#4ade80;">100.0%</span>
+          </div>
+          <p class="detail">→ 54/54 succeeded | Last 10: 10/10 (100%)</p>
+        </div>
+        
+  </div>
+
+  <p class="charts-title">Visual Breakdown</p>
+  <div class="charts-grid">
+    <div class="chart-box">
+      <h3>Metric Scores — Horizontal Bar</h3>
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>Radar Overview</h3>
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+  <footer>AskYourDoc RAG Eval • 2026-04-12 22:13:23</footer>
+</div>
+
+<script>
+  // Animate progress bars after load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.bar-fill').forEach(el => {
+      const target = el.dataset.target;
+      setTimeout(() => { el.style.width = target + '%'; }, 150);
+    });
+  });
+
+  const LABELS  = ["Index Coverage", "Embedding Hit Rate", "Chunk Retrieval Quality", "Context Utilization", "Query Success Rate"];
+  const VALUES  = [100.0, 100.0, 61.1, 100.0, 100.0];
+  const BCOLORS = ["#4ade80", "#4ade80", "#38bdf8", "#4ade80", "#4ade80"];
+
+  const gridColor  = 'rgba(30,41,59,0.8)';
+  const tickColor  = '#64748b';
+  const legendClr  = '#94a3b8';
+
+  // Bar chart
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: LABELS,
+      datasets: [{
+        label: 'Score (%)',
+        data: VALUES,
+        backgroundColor: BCOLORS.map(c => c + 'cc'),
+        borderColor: BCOLORS,
+        borderWidth: 1.5,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      animation: { duration: 1200, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e2130',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: '#2d3148',
+          borderWidth: 1,
+        }
+      },
+      scales: {
+        x: {
+          min: 0, max: 110,
+          grid: { color: gridColor },
+          ticks: { color: tickColor, font: { family: 'JetBrains Mono', size: 10 } },
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: tickColor, font: { family: 'JetBrains Mono', size: 9 } },
+        }
+      }
+    }
+  });
+
+  // Radar chart
+  new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: LABELS.map(l => l.replace(' Quality','').replace(' Rate','').replace(' Coverage','')),
+      datasets: [{
+        label: 'Score',
+        data: VALUES,
+        backgroundColor: 'rgba(129,140,248,0.2)',
+        borderColor: '#818cf8',
+        borderWidth: 2,
+        pointBackgroundColor: BCOLORS,
+        pointBorderColor: '#0a0d14',
+        pointRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: { duration: 1400, easing: 'easeOutQuart' },
+      scales: {
+        r: {
+          min: 0, max: 100,
+          grid: { color: gridColor },
+          angleLines: { color: gridColor },
+          ticks: {
+            color: tickColor, backdropColor: 'transparent',
+            font: { family: 'JetBrains Mono', size: 9 }, stepSize: 25,
+          },
+          pointLabels: { color: legendClr, font: { family: 'JetBrains Mono', size: 9 } },
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e2130',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: '#2d3148',
+          borderWidth: 1,
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

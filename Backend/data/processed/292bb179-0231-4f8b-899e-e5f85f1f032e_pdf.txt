@@ -1,0 +1,626 @@
+--- Page 1 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+CChhaapptteerr 22:: DDiiggiittaall IImmaaggee FFuunnddaammeennttaallss
+2.1 Elements of Visual Perception
+2.2 Light and the Electromagnetic Spectrum
+2.3 Image Sensing and Acquisition
+2.4 Image Sampling and Quantization
+2.5 Some Basic Relationships between Pixels
+2.6 Linear and Nonlinear Operations
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11 EElleemmeennttss ooff VViissuuaall PPeerrcceeppttiioonn
+In this section, we are interested in learning
+•Mechanics and parameters related to how images are formed
+in the eye.
+•Physical limitations of Human Vision
+•Resolution
+•Ability to adapt to changes in illumination
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+1
+--- Page 2 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..11 SSttrruuccttuurree ooff tthhee HHuummaann EEyyee
+•The eye is nearly a sphere
+•average diameter of approximately 20 mm
+•Three membranes :-
+- theouter cover
++ cornea (tough, transparent tissue)
++ sclera (opaque membrane)
+- the choroid (below the sclera)
++ ciliarybody
++ iris diaphragm (pupil)
+contracts or expands
+to control the amount of light
+- the retina (the innermost
+membrane of the eye)
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..11 SSttrruuccttuurree ooff tthhee HHuummaann EEyyee
+•When the eye is properly focused, light from an object outside
+the eye is imaged on the retina.
+•There are two classes of receptors
+- Cones : 6-7 million, located primarily in the fovea,
+highly sensitive to color, one cone -one nerve end,
+Cone vision, photopicor bright-light vision
+- Rods : 75-150 million, distributed over the retina surface,
+sensitive to low level of illumination,
+several rods - one nerve end, scotopicor dim-light vision
+Objects that appear brightly colored in daylight when seen by
+moonlight appear as colorless forms because only the rods are
+stimulated.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+2
+--- Page 3 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..11 SSttrruuccttuurree ooff tthhee HHuummaann EEyyee
+•Blind spot (the absence of receptors in this area)
+•fovea : a circular indentation in the retina of
+about 1.5 mm in diameter
+•The density of cones in the fovea is approximately
+150,000 elements per mm2
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..22 IImmaaggee FFoorrmmaattiioonn iinn tthhee EEyyee
+The focal lengthvaries from approximately 17 mm to about 14 mm,
+as the refractive power of the lens increases from its minimum to its
+maximum.
+Object farther away than about 3 m (cid:198)lowest refractive power
+(cid:198)focal length 17 mm
+Nearby object (cid:198)most strongly refractive power
+(cid:198)focal length 14 mm
+It is easto calculate the size of the retinal image of any object.
+15/100 = h/17
+h = 2.55 mm
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+3
+--- Page 4 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..33 BBrriigghhttnneessss AAddaappttaattiioonn aanndd DDiissccrriimmiinnaattiioonn
+Subjective brightness
+(intensity as perceived by
+the human visual system)
+is a logarithmic function
+of the light intensity incident on the eye.
+Photopicvision: range 106
+Transition from scotopicto photopicvision:
+range fom0.001 to 0.1 millilambert -3 to -1 mLin the log scale
+Visual system cannotoperate over such a total range simultaneously.
+(cid:198)brightness adaptation
+Brightness adaptation level(the current sensitivity level of the visual
+system) at level B is B to B
+a b a
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..33 BBrriigghhttnneessss AAddaappttaattiioonn aanndd DDiissccrriimmiinnaattiioonn
+Brightness discrimination: the ability of the eye to discriminate
+between changes in light intensity
+at any specific adaptation level
+A flat, uniformly illuminated diffuser (such as opaque glass), I
+A short-duration flash, ∆I
+When ∆I is strong enough, the subject will give a response of “yes”
+all the time.
+The increment of illumination discriminable50% of the time, ∆Ic
+Weber ratio, ∆I /I
+c
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+4
+--- Page 5 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..33 BBrriigghhttnneessss AAddaappttaattiioonn aanndd DDiissccrriimmiinnaattiioonn
+Small value of ∆I /I :
+c
+(cid:198)a small percentage change in intensity is discriminable
+(cid:198)good brightness discrimination
+The curve in Fig.2.6 shows that brightness discrimination is poor at
+low levels of illumination.
+The two branches in the curve :-the function of rods and cones.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..33 BBrriigghhttnneessss AAddaappttaattiioonn aanndd DDiissccrriimmiinnaattiioonn
+Mach bands
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+5
+--- Page 6 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..33 BBrriigghhttnneessss AAddaappttaattiioonn aanndd DDiissccrriimmiinnaattiioonn
+Simultaneous contrast
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..11..33 BBrriigghhttnneessss AAddaappttaattiioonn aanndd DDiissccrriimmiinnaattiioonn
+Optical illusions
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+6
+--- Page 7 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..22 LLiigghhtt aanndd tthhee EElleeccttrroommaaggnneettiicc SSppeeccttrruumm
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..22 LLiigghhtt aanndd tthhee EElleeccttrroommaaggnneettiicc SSppeeccttrruumm
+Visible band of EM : about 0.43 µm (violet) to about 0.79 µm (red)
+Achromatic or monochromatic light: void of color
+(cid:198)intensity or gray level
+Chromatic light
+(cid:198)radiance: total amount of energy that flows from the light
+source, measured in watts (W)
+(cid:198)luminance: amount of energy an observer perceives from a light
+source, measured in lumens (lm)
+(cid:198)brightness: subjective descriptor of light perception, impossible
+to measure
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+7
+--- Page 8 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33 IImmaaggee SSeennssiinngg aanndd AAccqquuiissiittiioonn
+The three principal
+sensor arrangements
+used to transform
+illumination energy into
+digital images.
+Incoming energy is transformed into
+a voltage.
+A digital quantity is obtained from each
+sensor by digitizing its response voltage.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33..11 IImmaaggee AAccqquuiissiittiioonn UUssiinngg aa SSiinnggllee SSeennssoorr
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+8
+--- Page 9 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33..22 IImmaaggee AAccqquuiissiittiioonn UUssiinngg aa SSeennssoorr SSttrriippss
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33..33 IImmaaggee AAccqquuiissiittiioonn UUssiinngg aa SSeennssoorr AArrrraayyss
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+9
+--- Page 10 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33..44 AA SSiimmppllee IImmaaggee FFoorrmmaattiioonn MMooddeell
+0 < f(x, y) < ∞ (2.3-1)
+f(x, y) = i(x, y) r(x, y) (2.3-2)
+illumination : 0 < i(x, y) < ∞ (2.3-3)
+reflectance : 0 < r(x, y) < 1 (2.3-4)
+total absorption total reflectance
+When images are formed via transmission of the illumination
+through a medium, such as a chest X-ray, we would deal with a
+transmissivityinstead of a reflectivity function.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33..44 AA SSiimmppllee IImmaaggee FFoorrmmaattiioonn MMooddeell
+A clear day : 90,000 lm/m2 (sun, on the surface of the Earth)
+A cloudy day : 10,000 lm/m2 (sun, on the surface of the Earth)
+A clear evening : 0.1 lm/m2(moon , on the surface of the Earth)
+A commercial office : 1,000 lm/m2
+r(x, y) for black velvet : 0.01
+for stainless steel : 0.65
+for flat-white wall paint : 0.80
+for silver-plated metal : 0.90
+for snow : 0.93
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+10
+--- Page 11 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..33..44 AA SSiimmppllee IImmaaggee FFoorrmmaattiioonn MMooddeell
+[L , L ] (cid:198)gray scale
+min max
+L = i r
+min min min
+L = i r
+max max max
+Common practice is to shift this interval numerically to the interval
+[0, L-1]
+0 (cid:198)black
+L-1 (cid:198)white
+All intermediate values are shades of gray varying from black to
+white.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44 IImmaaggee SSaammpplliinngg aanndd QQuuaannttiizzaattiioonn
+To create a digital image, we need to convert the continuous
+sensed data into digital form.
+(cid:198)sampling and quantization
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+11
+--- Page 12 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..11 BBaassiicc CCoonncceeppttss iinn SSaammpplliinngg aanndd QQuuaannttiizzaattiioonn
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..11 BBaassiicc CCoonncceeppttss iinn SSaammpplliinngg aanndd QQuuaannttiizzaattiioonn
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+12
+--- Page 13 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..22 RReepprreesseennttiinngg DDiiggiittaall IImmaaggeess
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..22 RReepprreesseennttiinngg DDiiggiittaall IImmaaggeess
+M x N digital image in the matrix form :
+f(0, 0) f(0, 1) … f(0, N-1)
+f(x, y) = f(1, 0) f(1, 1) … f(1, N-1) (2.4-1)
+f(M-1, 0) f(M-1, 1) … f(M-1, N-1)
+A more traditional matrix notation
+a a … a
+0, 0 0, 1 0, N-1
+A = a a … a (2.4-2)
+1, 0 1, 1 1, N-1
+a a … a
+M-1, 0 M-1, 1 M-1, N-1
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+13
+--- Page 14 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..22 RReepprreesseennttiinngg DDiiggiittaall IImmaaggeess
+Due to processing, storage, and sampling hardware considerations,
+the number of gray levels typically is an integer power of 2.
+L = 2k (2.4-3)
+The discrete gray levels are equally spaced and are integers in the
+interval [0, L-1].
+Dynamic range: the range of values spanned by the gray scale
+High dynamic range : gray levels span a significant portion of
+the gray scale (cid:198)high contrast
+Low dynamic range : (cid:198)low contrast (cid:198)dull, washed out gray look
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..22 RReepprreesseennttiinngg DDiiggiittaall IImmaaggeess
+The number of bits required to store a digitized image :
+b = M * N * k (2.4-4)
+When M = N,
+b = N2k (2.4-5)
+Image with 2k gray levels (cid:198)“k-bit image”
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+14
+--- Page 15 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..33 SSppaattiiaall aanndd GGrraayy--LLeevveell RReessoolluuttiioonn
+Spatial resolution
+Their size differences make it difficult to see the effects resulting
+from a reduction in the number of samples.
+The simplest way to compare these
+effects is to bring all the subsampled
+images up to size 1024 x 1024 by row
+and column pixel replication.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..33 SSppaattiiaall aanndd GGrraayy--LLeevveell RReessoolluuttiioonn
+checkerboard
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+15
+--- Page 16 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..33 SSppaattiiaall aanndd GGrraayy--LLeevveell RReessoolluuttiioonn
+Gray-level resolution
+In this example, we
+keep the number of
+samples constant and
+reduce the number of
+gray levels from 256
+to 2, in integer
+powers of 2.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..33 SSppaattiiaall aanndd GGrraayy--LLeevveell RReessoolluuttiioonn
+False contouring
+Caused by the use
+of an insufficient
+number of gray
+levels in smooth
+areas of digital
+image.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+16
+--- Page 17 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..33 SSppaattiiaall aanndd GGrraayy--LLeevveell RReessoolluuttiioonn
+Huang [1965] attempted to quantify experimentally the effects on
+image quality produced by varying Nand ksimultaneously.
+Subjective test
+Images similar to those shown in Fig. 2.22 were used.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..33 SSppaattiiaall aanndd GGrraayy--LLeevveell RReessoolluuttiioonn
+Isopreferencecurves
+(Nk-plane)
+Each point in the Nk-plane
+represents an image having values of N and k
+equal to the coordinates of that point.
+Points lying on an isopreferencecurve correspond to
+images of equal subjective quality.
+Isopreferencecurves tended to shift right and upward, means larger
+values for N and k, which implies better picture quality.
+Isopreferencecurves tend to become more vertical as the detail in
+the image increases. (cid:198)only a few gray levels may be needed.
+A decrease in k tends to increase the apparent contrast of an image.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+17
+--- Page 18 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..44 AAlliiaassiinngg aanndd MMooiirréé PPaatttteerrnnss
+Shannon sampling theorem :
+If the function is sampled at a rate equal to or greater than twice
+its highest frequency, it is possible to recover completely the
+original function from its samples.
+undersampled (cid:198)aliasing corrupts
+the sampled image.
+The corruption is in the form of
+additional frequency components
+being introduced into the sampled
+function :
+(cid:198) Aliased frequencies
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..55 ZZoooommiinngg aanndd SShhrriinnkkiinngg DDiiggiittaall IImmaaggeess
+Zooming requires two steps:
+1. the creation of new pixel locations
+2. the assignment of gray levels to those new locations
+(cid:198)interpolation
+Pixel replication: applicable when increase the size of an image an
+integer number of times.
+Nearest neighbor interpolation : Assign the gray level of the closest
+pixel to the new pixel in the grid.
+(cid:198)fast, but it produces a checkerboard effect.
+Bilinear interpolation: using the four nearest neighbors of a point
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+18
+--- Page 19 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..44..55 ZZoooommiinngg aanndd SShhrriinnkkiinngg DDiiggiittaall IImmaaggeess
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55 SSoommee BBaassiicc RReellaattiioonnsshhiippss BBeettwweeeenn PPiixxeellss
+22..55..11 NNeeiigghhbboorrss ooff aa PPiixxeell
+A pixel pat coordinates (x, y).
+4-neighbors of p: four horizontal and vertical neighbors
+N (p): (x+1, y), (x-1, y), (x, y+1), (x, y-1)
+4
+Diagonal neighbors of p
+N (p) : (x+1, y+1), (x-1, y-1), (x-1, y+1), (x-1, y-1)
+D
+8-neighbors of p: N (p)together with N (p)
+4 D
+N (p) : (x+1, y), (x-1, y), (x, y+1), (x, y-1),
+8
+(x+1, y+1), (x-1, y-1), (x-1, y+1), (x-1, y-1)
+Some of neighbors of plie outside the image if (x,y) is on the
+border of the image.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+19
+--- Page 20 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..22 AAddjjaacceennccyy,, CCoonnnneeccttiivviittyy,,
+RReeggiioonnss,, aanndd BBoouunnddaarriieess
+To establish if two pixels are connected, it must be determined
+1. if they areneighbors and
+2. if their gray levels satisfy a specified criterion of similarity.
+Ex.
+In a binary image with values 0 and 1, two pixels may be 4-neighbors,
+but they are said to be connected only if they have the same value.
+V: the set of gray-level values used to define adjacency.
+In binary image, V = {1}if we are referring to adjacency of pixels with
+value 1.
+In a gray-scale image, set Vtypically contains more elements.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..22 AAddjjaacceennccyy,, CCoonnnneeccttiivviittyy,,
+RReeggiioonnss,, aanndd BBoouunnddaarriieess
+4-adjacency: Two pixels pand q with values from Vare 4-adjacency
+if qis in the set N (p).
+4
+8-adjacency: Two pixels pand q with values from Vare 8-adjacency
+if qis in the set N (p).
+8
+m-adjacency(mixed adjacency) : Two pixels pand q with values
+from Vare m-adjacencyif
+(i) qis in N (p), or
+4
+(ii) qis in N (p) and the set N (p) ∩ N (q) has no
+D 4 4
+pixels whose values are from V.
+m-adjacency is introduced to eliminate the ambiguities that often
+arise when 8-adjacency is used.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+20
+--- Page 21 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..22 AAddjjaacceennccyy,, CCoonnnneeccttiivviittyy,,
+RReeggiioonnss,, aanndd BBoouunnddaarriieess
+Fig. 2.26: for V = {1}
+Two image subsets S and S are adjacent if some pixel in S is adjacent
+1 2 1
+to some pixel in S .
+2
+A pathfrom pixel pwith coordinates (x,y)to pixel qwith coordinates
+(s,t) is a sequence of distinct pixels with coordinates
+(x , y ), (x ,y ), …, (x ,y )
+0 0 1 1 n n
+where (x , y ) = (x, y) , (x ,y ) = (s, t) and pixels (x , y) and(x ,y )
+0 0 n n i i i-1 i-1
+are adjacent for 1 ≤i ≤ n.
+(cid:198)nis the length of a path.
+if (x , y ) = (x ,y ), the path is a closed path.
+0 0 n n
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..22 AAddjjaacceennccyy,, CCoonnnneeccttiivviittyy,,
+RReeggiioonnss,, aanndd BBoouunnddaarriieess
+4-path, 8-path, and m-path can be defined depending on the type of
+adjacency specified.
+Two pixels pand q are said to be connectedin subset Sif there exists
+a path between them consisting entirely of pixels in S.
+A connected componentof S: the set of pixels that are connected in S
+A connected set: the set that only has one connected component in it.
+A subset of pixels Ris a regionof the image if Ris a connected set.
+The boundary (border, contour) of a region Ris the set of
+pixels in the region that have one or more neighbors that are not in R.
+If Rhappened to be an entire image, then its boundary is the
+set of pixels in the first and last rows and columns of the image.
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+21
+--- Page 22 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..33 DDiissttaannccee MMeeaassuurreess
+For pixels p, q, and z,with coordinates (x,y), (s,t), and (v,w),
+respectively, D is a distance functionor metricif
+(a) D(p,q) ≥0 ( D(p,q) = 0 if p = q ),
+(b) D(p,q) = D(q,p), and
+(c) D(p,z) ≤D(p,q) + D(q,z).
+The Euclidean distancebetween pand q is
+D (p,q)= [ (x−s)2+(y−t)2 ]1 2 (2.5-1)
+e
+A D distance (city-block distance) is
+4
+2
+D (p,q)= x−s + y−t (2.5-2)
+4 2 1 2
+2 1 0 1 2
+The pixels with D = 1 are the 4-neighbors of (x,y).
+4 2 1 2
+2
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..33 DDiissttaannccee MMeeaassuurreess
+A D distance (chessboard distance) is 2 2 2 2 2
+8
+D (p,q)=max ( x−s, y−t ) (2.5-3) 2 1 1 1 2
+8 2 1 0 1 2
+The pixels with D = 1 are the 8-neighbors of (x,y). 2 1 1 1 2
+8 2 2 2 2 2
+D and D distances are independent of any paths that might exist
+4 8
+between the points.
+D distancebetween two points is defined as the shortest m-path
+m
+between the points.
+Ex. p p when V = {1}
+3 4
+p p p, p , and p have value 1
+1 2 2 4
+p
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+22
+--- Page 23 ---
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..55..33 DDiissttaannccee MMeeaassuurreess
+0 1
+0 1
+1
+D distance between p and p is 2.
+m 4
+0 1 1 1
+1 1 0 1
+1 1
+D distance between p and p is 3.
+m 4
+1 1
+1 1
+1
+D distance between p and p is 4.
+m 4
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+DDiiggiittaall IImmaaggee PPrroocceessssiinngg,, 22nndd eedd..
+www.imageprocessingbook.com
+22..66 LLiinneeaarr aanndd NNoonnlliinneeaarr OOppeerraattiioonnss
+H : an operator whose input and output are images.
+H is a linearoperatorif, for any two images fand gand any two
+scalars aand b,
+H(af +bg)=aH(f)+bH(g) (2.6-1)
+Ex.
+An operator whose function is to compute the sum of K images is a
+linear operator.
+An operator that computes the absolute value of the difference of two
+images is not.
+(cid:198)nonlinear
+Somkiat Wangsiripitak
+© 2002 R. C. Gonzalez & R. E. Woods
+23
